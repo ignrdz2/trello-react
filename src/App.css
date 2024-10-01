@@ -1,38 +1,115 @@
-.App {
+body, html {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Evita el scroll vertical en toda la página */
+}
+
+.tasks {
+  min-height: 20vh;
+  width: 100%;
+}
+
+h2.title {
   text-align: center;
+  margin-bottom: 10px; /* Reduce el espacio debajo del título */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.task-header {
+  display: flex;
+  align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.task-title {
+  flex-grow: 1;
+}
+
+.priority-low {
+  background-color: #32bb70;
+}
+
+.priority-medium {
+  background-color: #f6be06;
+}
+
+.priority-high {
+  background-color: #f14a0e;
+}
+
+#addTaskBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.columns-container {
+  overflow-x: auto; /* Permitir scroll horizontal */
+  overflow-y: hidden; /* No permitir scroll vertical */
+  white-space: nowrap;
+  width: 100%;
+  max-height: 80vh;
+  padding-top: 10px; /* Reducimos el espacio entre el header y las columnas */
+  border-radius: 25px;
+}
+
+.columns {
+  display: flex;
+  flex-wrap: nowrap; /* Sin wrapping para resoluciones grandes */
+  height: calc(100vh - 50px); /* Ajusta la altura de las columnas */
+  margin: 2px;
+}
+
+.column {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex: 1;
+  overflow: hidden; /* Oculta el desbordamiento */
 }
 
-.App-link {
-  color: #61dafb;
+.tasks-container {
+  flex-grow: 1;
+  max-height: 60vh;
+  overflow-y: auto; /* Permite el desplazamiento vertical */
+  padding-top: 10px; /* Espacio entre el título y las tareas */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.column-title {
+  background-color: #ffffff; /* Color de fondo para el título */
+  padding: 10px;
+  margin: 0;
+  z-index: 3; /* Asegura que el título esté sobre la imagen de fondo */
+  position: -webkit-sticky; /* Soporte para Safari */
+  position: sticky;
+  top: 0; /* Fija el título en la parte superior */
+  border-radius: 25px;
+}
+
+/* Estilos para el modo oscuro */
+[data-theme="dark"] .column-title {
+  color: #ffffff; /* Color de las letras en modo oscuro */
+  background-color: #333333; /* Color de fondo en modo oscuro */
+}
+
+@media screen and (max-width: 768px) {
+  .columns {
+      flex-wrap: wrap; /* En resoluciones más pequeñas, las columnas se envuelven */
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media screen and (max-width: 425px) {
+  .columns-container {
+      overflow-x: auto; /* Scroll horizontal */
+      overflow-y: hidden; /* No permitir scroll vertical */
+  }
+
+  .task-column {
+      width: 100%; /* Cada columna ocupa todo el ancho */
   }
 }
