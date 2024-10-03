@@ -1,7 +1,8 @@
+/* Estilos básicos para dispositivos móviles */
 body, html {
   height: 100%;
   margin: 0;
-  overflow: hidden; /* Evita el scroll vertical en toda la página */
+  overflow-x: hidden; /* Solo oculta el scroll horizontal, permite el scroll vertical solo si es necesario */
 }
 
 .tasks {
@@ -49,14 +50,16 @@ h2.title {
   z-index: 1000;
 }
 
+/* Contenedor de columnas */
 .columns-container {
   overflow-x: auto; /* Permitir scroll horizontal */
-  overflow-y: hidden; /* No permitir scroll vertical */
+  overflow-y: hidden; /* No permitir scroll vertical en pantallas grandes */
   white-space: nowrap;
   width: 100%;
   max-height: 80vh;
   padding-top: 10px; /* Reducimos el espacio entre el header y las columnas */
   border-radius: 25px;
+  height: 100%;
 }
 
 .columns {
@@ -76,7 +79,7 @@ h2.title {
 .tasks-container {
   flex-grow: 1;
   max-height: 60vh;
-  overflow-y: auto; /* Permite el desplazamiento vertical */
+  overflow-y: auto; /* Permite el desplazamiento vertical solo dentro del contenedor de tareas */
   padding-top: 10px; /* Espacio entre el título y las tareas */
 }
 
@@ -87,7 +90,7 @@ h2.title {
   z-index: 3; /* Asegura que el título esté sobre la imagen de fondo */
   position: -webkit-sticky; /* Soporte para Safari */
   position: sticky;
-  top: 0; /* Fija el título en la parte superior */
+  top: 0;
   border-radius: 25px;
 }
 
@@ -97,19 +100,39 @@ h2.title {
   background-color: #333333; /* Color de fondo en modo oscuro */
 }
 
-@media screen and (max-width: 768px) {
+/* Estilos para pantallas de tablet o más grandes (>= 768px) */
+@media screen and (min-width: 768px) {
   .columns {
-      flex-wrap: wrap; /* En resoluciones más pequeñas, las columnas se envuelven */
+    flex-wrap: nowrap; /* No envuelve las columnas */
+    height: calc(100vh - 50px); /* Ajusta la altura de las columnas */
+  }
+
+  .column {
+    width: 48%; /* Ajusta el ancho de las columnas en tablets */
+    margin-bottom: 0;
   }
 }
 
-@media screen and (max-width: 425px) {
-  .columns-container {
-      overflow-x: auto; /* Scroll horizontal */
-      overflow-y: hidden; /* No permitir scroll vertical */
+/* Estilos para pantallas de escritorio o más grandes (>= 1024px) */
+@media screen and (min-width: 1024px) {
+  .columns {
+    flex-wrap: nowrap;
+    height: calc(100vh - 50px);
   }
 
-  .task-column {
-      width: 100%; /* Cada columna ocupa todo el ancho */
+  .column {
+    flex: 1; /* Cada columna ocupa una parte del contenedor */
+  }
+}
+
+/* Scroll vertical solo en pantallas de 425px de ancho o menos */
+@media screen and (max-width: 425px) {
+  .columns-container {
+    overflow-y: auto; /* Permitir scroll vertical solo en pantallas pequeñas */
+  }
+
+  .columns {
+    flex-wrap: wrap;
+    height: auto; /* Permitir que las columnas crezcan verticalmente */
   }
 }
